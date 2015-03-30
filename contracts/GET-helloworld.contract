@@ -1,0 +1,15 @@
+{
+    "producer": "http://localhost:7878",
+    "for": "helloworld",
+    "on": "GET",
+    "uri": "/helloWorld",
+    "expect": {
+        "request": {
+            "status_code": 200,
+            "headers": []
+        },
+        "body": {
+		   "Random": 1
+		}
+    }
+}
