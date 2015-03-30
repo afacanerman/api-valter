@@ -18,22 +18,6 @@ var stdin = process.openStdin();
 
 
 // Program is ready to run contract tests
-var contractList = valter.scan(program.filepath);
-valter.assertContracts(contractList, function(isSuccess){
-	if(isSuccess){
-		console.log("SUCCESS");
-		shouldKill = true;
-	}
-});
-
-
-
-var isAlive = function(){
-	if(shouldKill){
-		process.exit(0);
-	}
-};
-
-setTimeout(function () {  
-	isAlive();
-}, 500);
+valter.init();
+valter.contractPathList = valter.scan(program.filepath);
+valter.checkContract();

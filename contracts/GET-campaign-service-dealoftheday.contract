@@ -1,47 +1,45 @@
 {
     "producer": "http://localhost:7878",
-    "expectations": [{
-        "for": "fatch deal of the day data",
-        "on": "GET",
-        "uri": "/campaigns",
-        "expect": {
-            "request": {
-                "status_code": 200,
-                "headers": []
-            },
-            "body": {
-                "deals": [{
-                    "thumbnailImageUrl": "",
-                    "name": "asd",
-                    "id": "asd",
-                    "sku": "TELCEPNOKLU620-B",
-                    "catalogName": "",
-                    "price": {
-                        "value": 748.99,
-                        "taxIncluded": true
-                    },
-                    "originalPrice": {
-                        "value": 748.99,
-                        "taxIncluded": true
-                    },
-                    "discountRate": 0,
-                    "saleEndDate": "2015-04-19T10:01:05.4230000",
-                    "stockQuantity": 50,
-                    "campaignBadges": [],
-                    "hasFreeShipping": false,
-                    "images": [{
-                        "url": "img1"
-                    }, {
-                        "url": "img2"
-                    }, {
-                        "url": "img3"
-                    }, {
-                        "url": "img4"
-                    }],
-                    "hasSuperFastDelivery": true,
-                    "shortDescription": "asd"
-                }]
-            }
+    "for": "fatch deal of the day data",
+    "on": "GET",
+    "uri": "/campaigns",
+    "expect": {
+        "request": {
+            "status_code": 200,
+            "headers": []
+        },
+        "body": {
+            "deals": [{
+                "thumbnailImageUrl": "",
+                "name": "asd",
+                "id": "asd",
+                "sku": "TELCEPNOKLU620-B",
+                "catalogName": "",
+                "price": {
+                    "value": 748.99,
+                    "taxIncluded": true
+                },
+                "originalPrice": {
+                    "value": 748.99,
+                    "taxIncluded": true
+                },
+                "discountRate": 0,
+                "saleEndDate": "2015-04-19T10:01:05.4230000",
+                "stockQuantity": 50,
+                "campaignBadges": [],
+                "hasFreeShipping": false,
+                "images": [{
+                    "url": "img1"
+                }, {
+                    "url": "img2"
+                }, {
+                    "url": "img3"
+                }, {
+                    "url": "img4"
+                }],
+                "hasSuperFastDelivery": true,
+                "shortDescription": "asd"
+            }]
         }
-    }]
+    }
 }

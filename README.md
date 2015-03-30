@@ -11,22 +11,20 @@ Create sample contract in your folder
 `
 {
     "producer": "http://yourserviceurl.com",
-    "expectations": [{
-        "for": "description",
-        "on": "GET",
-        "uri": "/endpoint",
-        "expect": {
-            "request": {
-                "status_code": 200,
-                "headers": []
-            },
-            "body": {
-                "mydata": {
- 					"key" : "val"
-                }
+    "for": "description",
+    "on": "GET",
+    "uri": "/endpoint",
+    "expect": {
+        "request": {
+            "status_code": 200,
+            "headers": []
+        },
+        "body": {
+            "mydata": {
+					"key" : "val"
             }
         }
-    }]
+    }
 }`
 
 ### Linux
