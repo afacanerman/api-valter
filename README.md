@@ -7,9 +7,10 @@ Valter is your api contract validator. It is very easy and lightwight only thing
 download it
 
 ## Usage
-`Create sample contract in your folder
+Create sample contract in your folder
+`
 {
-    "producer": "http://campaigns.qa.hepsiburada.com",
+    "producer": "http://yourserviceurl.com",
     "expectations": [{
         "for": "description",
         "on": "GET",
