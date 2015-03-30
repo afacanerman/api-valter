@@ -1,0 +1,31 @@
+{
+  "name": "api-valter",
+  "version": "0.1.0",
+  "description": "Valter is your api contract validator. It is very easy and lightwight only thing that you should do is create a contract in json format.",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "commander": "^2.7.1",
+    "request": "^2.54.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.1",
+    "chai": "^2.2.0",
+    "sinon": "^1.14.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/afacanerman/api-valter"
+  },
+  "author": "Cagdas Erman Afacan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/afacanerman/api-valter/issues"
+  },
+  "homepage": "https://github.com/afacanerman/api-valter"
+}
