@@ -1,14 +1,40 @@
 # Api-Valter
 
-TODO: Write a project description
+Valter is your api contract validator. It is very easy and lightwight only thing that you should do is create a contract in json format
 
 ## Installation
 
-TODO: Describe the installation process
+download it
 
 ## Usage
+`Create sample contract in your folder
+{
+    "producer": "http://campaigns.qa.hepsiburada.com",
+    "expectations": [{
+        "for": "description",
+        "on": "GET",
+        "uri": "/endpoint",
+        "expect": {
+            "request": {
+                "status_code": 200,
+                "headers": []
+            },
+            "body": {
+                "mydata": {
+ 					"key" : "val"
+                }
+            }
+        }
+    }]
+}`
 
-TODO: Write usage instructions
+### Linux
+
+`node app.js -p "/yourPath"`
+
+### Windows
+
+`node app.js -p "c:\yourPath"`
 
 ## Contributing
 
@@ -18,14 +44,3 @@ TODO: Write usage instructions
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
 
-## History
-
-TODO: Write history
-
-## Credits
-
-TODO: Write credits
-
-## License
-
-TODO: Write license
