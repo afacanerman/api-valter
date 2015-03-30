@@ -42,4 +42,4 @@ var serviceResponse = {
 valter.typeCheck(contract, serviceResponse);
 
 console.log("SUCCESS");
-
+process.exit(0);
