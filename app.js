@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 var program = require('commander');
 var valter = require("./lib/valter.js");
-var sys = require("sys");
-var keepAlive = true;
 
 program
   .version('0.0.1')
