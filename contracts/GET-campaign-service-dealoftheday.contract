@@ -1,9 +1,9 @@
 {
-    "producer": "http://campaigns.qa.hepsiburada.com",
+    "producer": "http://localhost:7878",
     "expectations": [{
         "for": "fatch deal of the day data",
         "on": "GET",
-        "uri": "/dealoftheday",
+        "uri": "/campaigns",
         "expect": {
             "request": {
                 "status_code": 200,
@@ -11,11 +11,11 @@
             },
             "body": {
                 "deals": [{
-                    "thumbnailImageUrl": "//images.hepsiburada.net/assets/Telefon/#imgSize/Telefon_2735219.jpg",
+                    "thumbnailImageUrl": "",
                     "name": "asd",
-                    "id": "telcepnoklu620",
+                    "id": "asd",
                     "sku": "TELCEPNOKLU620-B",
-                    "catalogName": "Telefon",
+                    "catalogName": "",
                     "price": {
                         "value": 748.99,
                         "taxIncluded": true
@@ -30,13 +30,13 @@
                     "campaignBadges": [],
                     "hasFreeShipping": false,
                     "images": [{
-                        "url": "//images.hepsiburada.net/assets/Telefon/#imgSize/Telefon_2735219.jpg"
+                        "url": "img1"
                     }, {
-                        "url": "//images.hepsiburada.net/assets/Telefon/#imgSize/Telefon_2248090.jpg"
+                        "url": "img2"
                     }, {
-                        "url": "//images.hepsiburada.net/assets/Telefon/#imgSize/Telefon_2248095.jpg"
+                        "url": "img3"
                     }, {
-                        "url": "//images.hepsiburada.net/assets/Telefon/#imgSize/Telefon_2713377.jpg"
+                        "url": "img4"
                     }],
                     "hasSuperFastDelivery": true,
                     "shortDescription": "asd"

@@ -22,7 +22,9 @@ describe("Valter", function(){
        it("should retrieve the files from a directory", function() {
           var results = valter.scan('/Users/cafacan/Dropbox/Repositories/api-valter/test_files');
           expect(results.length).to.equal(2);
-          expect(results).to.deep.equal(["a", "b"]);
+          expect(results).to.deep.equal([
+            "/Users/cafacan/Dropbox/Repositories/api-valter/test_files/a", 
+            "/Users/cafacan/Dropbox/Repositories/api-valter/test_files/b"]);
        });
 
    });
@@ -130,6 +132,40 @@ describe("Valter", function(){
           }
 
           expect(exception).to.not.be.undefined;
+      });
+
+
+       it('should compare contract has array in it', function(){
+          var contract = {"data" : [{
+              e: "e",
+              r: 123,
+              m: [1, 2, 3],
+              a: {
+                  b: 1
+              },
+              n: new Date()
+          }]};
+
+
+          var serviceResponse = {"data" : [{
+              e: "e",
+              r: 123,
+              m: [1, 2, 3],
+              a: {
+                  b: 1
+              },
+              n: new Date()
+          }]};
+
+
+          var exception;
+          try {
+            valter.typeCheck(contract, serviceResponse)
+          } catch(ex){
+            exception = ex;
+          }
+
+          expect(exception).to.be.undefined;
       });
     });
 });
