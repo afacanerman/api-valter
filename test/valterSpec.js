@@ -26,7 +26,6 @@ describe("Valter", function(){
        });
 
    });
-
     describe("#match()", function(){
         it("should find and return matches based on a query", function(){
             var files = ["hello.txt", "world.js", "another.js"];
@@ -57,6 +56,13 @@ describe("Valter", function(){
         var readJson = valter.readAsJson('test_files/a.contract');
         expect(readJson).to.deep.equal({ foo: 'bar' });
       });
+    });
+
+    describe('#fetchContractData(contract)', function(){
+        it('should get service response', function(){
+            var contractMD = valter.readAsJson('contracts/GET-campaign-service-dealoftheday.contract');
+
+        });
     });
 
     describe('#typeCheck()', function(){
