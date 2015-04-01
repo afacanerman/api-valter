@@ -1,8 +1,8 @@
 {
-    "producer": "http://localhost:7878",
+    "producer": "http://localhost:8080",
     "for": "helloworld",
     "on": "GET",
-    "uri": "/helloWorld",
+    "uri": "/helloworld",
     "expect": {
         "request": {
             "status_code": 200,

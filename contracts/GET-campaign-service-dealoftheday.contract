@@ -1,5 +1,5 @@
 {
-    "producer": "http://localhost:7878",
+    "producer": "http://localhost:8080",
     "for": "fatch deal of the day data",
     "on": "GET",
     "uri": "/campaigns",
