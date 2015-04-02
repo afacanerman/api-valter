@@ -28,12 +28,9 @@ describe("Valter", function() {
             var contractsPath = path.resolve("contracts");
             var results = valter.scan(contractsPath);
 
-            expect(contractsPath).to.be.equal('c:\\workspace\\api-valter\\contracts');
             expect(results.length).to.equal(2);
-            expect(results).to.deep.equal([
-                "c:\\workspace\\api-valter\\contracts/GET-campaign-service-dealoftheday.contract",
-                "c:\\workspace\\api-valter\\contracts/GET-helloworld.contract"
-            ]);
+            expect(results[0]).to.match(/.contract$/);
+            expect(results[1]).to.match(/.contract$/);
         });
     });
 
@@ -87,9 +84,8 @@ describe("Valter", function() {
         it('it should send plain GET request', function(){
             var spy = sinon.spy(valter, "request");
             var resolvedPath = path.resolve("contracts");
-            
 
-            valter.contractPathList = [resolvedPath+"\\GET-campaign-service-dealoftheday.contract"];
+            valter.contractPathList = [path.join(resolvedPath, "GET-campaign-service-dealoftheday.contract")];
             valter.checkContract();
 
             expect(spy.called).to.be.true;
