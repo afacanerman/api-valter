@@ -1,14 +1,16 @@
 var fs = require("fs");
 var expect = require("chai").expect;
-var valter = require("../lib/valter.js");
+var Valter = require("../lib/valter.js");
 var path = require("path");
 var sinon = require("sinon");
 
+var valter = new Valter();
+
 describe("Valter", function() {
     var reset = function(val) {
-        valter.hasError = !val;
-        valter.keepAlive = val;
-    }
+        Valter.hasError = !val;
+        Valter.keepAlive = val;
+    };
 
     describe("#scan()", function() {
         beforeEach(function() {
@@ -18,8 +20,8 @@ describe("Valter", function() {
         it('should set error property if given dir does not exists', function() {
             valter.scan('dirDoesNotExists');
 
-            expect(valter.hasError).to.be.true;
-            expect(valter.keepAlive).to.be.false;
+            expect(Valter.hasError).to.equal(true);
+            expect(Valter.keepAlive).to.equal(false);
         });
 
         it("should retrieve the files from a directory", function() {
@@ -74,11 +76,11 @@ describe("Valter", function() {
         });
 
         it('should set error flag if given directory has no contract', function() {
-            valter.contractPathList = [];
+            Valter.contractPathList = [];
             valter.checkContract();
 
-            expect(valter.hasError).to.be.true;
-            expect(valter.keepAlive).to.be.false;
+            expect(Valter.hasError).to.equal(true);
+            expect(Valter.keepAlive).to.equal(false);
         });
 
         it('it should send plain GET request', function(){
@@ -88,7 +90,7 @@ describe("Valter", function() {
             valter.contractPathList = [path.join(resolvedPath, "GET-campaign-service-dealoftheday.contract")];
             valter.checkContract();
 
-            expect(spy.called).to.be.true;
+            expect(spy).to.be.called;
         });
     });
 
@@ -101,7 +103,7 @@ describe("Valter", function() {
                     hello: "world"
                 });
                 done();
-            })
+            });
         });
     });
 
@@ -120,7 +122,7 @@ describe("Valter", function() {
             };
 
             valter.typeCheck(contract, serviceResponse);
-            expect(valter.hasError).to.be.true;
+            expect(Valter.hasError).to.equal(true);
         });
 
         it('should compare contract and service contains same array types', function() {
@@ -133,8 +135,8 @@ describe("Valter", function() {
                 m: [1, 2, 3]
             };
 
-            valter.typeCheck(contract, serviceResponse)
-            expect(valter.hasError).to.be.false;
+            valter.typeCheck(contract, serviceResponse);
+            expect(Valter.hasError).to.equal(false);
         });
 
         it('should compare contract and service response with not same objects', function() {
@@ -163,7 +165,7 @@ describe("Valter", function() {
             var exception;
 
             valter.typeCheck(contract, serviceResponse);
-            expect(valter.hasError).to.be.true;
+            expect(Valter.hasError).to.equal(true);
         });
 
         it('should compare contract and service response with not same objects', function() {
@@ -192,7 +194,7 @@ describe("Valter", function() {
             var exception;
 
             valter.typeCheck(contract, serviceResponse);
-            expect(valter.hasError).to.be.true;
+            expect(Valter.hasError).to.equal(true);
         });
 
         it('should check object in array as same objects', function(){
@@ -217,8 +219,8 @@ describe("Valter", function() {
                 }]
             };
 
-            valter.typeCheck(contract, serviceResponse)
-            expect(valter.hasError).to.be.false;
+            valter.typeCheck(contract, serviceResponse);
+            expect(Valter.hasError).to.equal(false);
         });
 
         it('should check object in array as not same objects', function(){
@@ -243,8 +245,8 @@ describe("Valter", function() {
                 }]
             };
 
-            valter.typeCheck(contract, serviceResponse)
-            expect(valter.hasError).to.be.true;
+            valter.typeCheck(contract, serviceResponse);
+            expect(Valter.hasError).to.equal(true);
         });
     });
 });
