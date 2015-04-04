@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var program = require('commander');
-var valter = require("./lib/valter.js");
+var Valter = require("./lib/valter.js");
 
 program
   .version('0.0.1')
@@ -12,13 +12,8 @@ if (program.filepath === undefined) { throw "filepath argument is mandatory for 
 
 console.log('valter started for the metada files under \'%s\'\n\n', program.filepath);
 
-
-var stdin = process.openStdin();
-
-
-// Program is ready to run contract tests
-valter.contractPathList = valter.scan(program.filepath);
-valter.checkContract();
+var valter = new Valter();
+valter.init(program.filepath);
 
 setInterval(function () { 
 	var state = valter.checkAlive();

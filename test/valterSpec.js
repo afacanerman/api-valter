@@ -4,13 +4,35 @@ var Valter = require("../lib/valter.js");
 var path = require("path");
 var sinon = require("sinon");
 
-var valter = new Valter();
 
 describe("Valter", function() {
+    
+    var valter = new Valter(true); //silent mode
+
+    beforeEach(function() {
+        reset(true);
+    });
+
     var reset = function(val) {
-        Valter.hasError = !val;
-        Valter.keepAlive = val;
+        valter.currentState().hasError = !val;
+        valter.currentState().keepAlive = val;
     };
+
+    it('should instantiated properly', function(){
+        var state = valter.currentState();
+        expect(state.hasError).to.be.false;
+        expect(state.keepAlive).to.be.true;
+        expect(state.contractPathList.length).to.equal(0);
+    });
+
+    it('should init function be called', function(){
+        var scanSpy = sinon.spy(valter, "scan");
+        var checkContractSpy = sinon.spy(valter, 'checkContract');
+
+        valter.init('withContractPath');
+        expect(scanSpy).to.be.called;
+        expect(checkContractSpy).to.be.called;
+    });
 
     describe("#scan()", function() {
         beforeEach(function() {
@@ -19,16 +41,16 @@ describe("Valter", function() {
 
         it('should set error property if given dir does not exists', function() {
             valter.scan('dirDoesNotExists');
-
-            expect(Valter.hasError).to.equal(true);
-            expect(Valter.keepAlive).to.equal(false);
+            expect(valter.currentState().hasError).to.equal(true);
+            expect(valter.currentState().keepAlive).to.equal(false);
         });
 
         it("should retrieve the files from a directory", function() {
             reset(true);
 
             var contractsPath = path.resolve("contracts");
-            var results = valter.scan(contractsPath);
+            valter.scan(contractsPath);
+            var results = valter.currentState().contractPathList
 
             expect(results.length).to.equal(2);
             expect(results[0]).to.match(/.contract$/);
@@ -36,72 +58,51 @@ describe("Valter", function() {
         });
     });
 
-    describe('#readAsJson()', function() {
-
-        before(function() {
-            reset(true);
-
-            if (!fs.existsSync("test_files")) {
-                fs.mkdirSync("test_files");
-                fs.writeFileSync("test_files/a.contract", '{ "foo" : "bar" }');
-            }
-        });
-        after(function() {
-            fs.unlinkSync("test_files/a.contract");
-            fs.rmdirSync("test_files");
-        });
-
-        it('should read the given file and return data as json', function() {
-            var readJson = valter.readAsJson('test_files/a.contract');
-            expect(readJson).to.deep.equal({
-                foo: 'bar'
-            });
-        });
-    });
-
-    describe('#getOptions(contract)', function(){
-        var requestOptions = valter.getOptions({
-             "method": "GET",
-             "uri": "/campaigns",
-             "form" : {}
-        });
-
-        expect(requestOptions.method).to.be.equal("GET");
-        expect(requestOptions.form).to.be.deep.equal({});
-    });
 
     describe('#checkContract()', function() {
         beforeEach(function() {
+            valter.currentState().contractPathList = [];
             reset(true);
         });
 
         it('should set error flag if given directory has no contract', function() {
-            Valter.contractPathList = [];
             valter.checkContract();
 
-            expect(Valter.hasError).to.equal(true);
-            expect(Valter.keepAlive).to.equal(false);
-        });
-
-        it('it should send plain GET request', function(){
-            var spy = sinon.spy(valter, "request");
-            var resolvedPath = path.resolve("contracts");
-
-            valter.contractPathList = [path.join(resolvedPath, "GET-campaign-service-dealoftheday.contract")];
-            valter.checkContract();
-
-            expect(spy).to.be.called;
+            expect( valter.currentState().hasError).to.equal(true);
+            expect( valter.currentState().keepAlive).to.equal(false);
         });
     });
 
-    describe('#request(url, options, promise)', function(done){
-        it('should do POST request', function(){
+    describe('#request(url, options, promise)', function(){
+        
+        it('should send POST request', function(done){
             valter.request("http://localhost:8080/helloworld", {
+                method : "POST",
+                form : {}
+            }, function(error, response, body){
+                expect(JSON.parse(body)).to.be.deep.equal({
+                    "hello": "world"
+                });
+                done();
+            });
+        });
+
+        it('should send GET request', function(done){
+            valter.request("http://localhost:8080/helloworld", {
+                method : "GET"
+            }, function(error, response, body){
+                expect(JSON.parse(body)).to.be.deep.equal({
+                    "Random": "content"
+                });
+                done();
+            });
+        });
+
+        it('should throw an error if service not available', function(done){
+             valter.request("http://localhost:8080", {
 
             }, function(error, response, body){
-                expect(body).to.be.deep.equal({
-                    hello: "world"
-                });
+                expect(error).to.be.null;
                 done();
             });
         });
@@ -122,7 +123,7 @@ describe("Valter", function() {
             };
 
             valter.typeCheck(contract, serviceResponse);
-            expect(Valter.hasError).to.equal(true);
+            expect(valter.currentState().hasError).to.equal(true);
         });
 
         it('should compare contract and service contains same array types', function() {
@@ -136,7 +137,7 @@ describe("Valter", function() {
             };
 
             valter.typeCheck(contract, serviceResponse);
-            expect(Valter.hasError).to.equal(false);
+            expect(valter.currentState().hasError).to.equal(false);
         });
 
         it('should compare contract and service response with not same objects', function() {
@@ -165,7 +166,7 @@ describe("Valter", function() {
             var exception;
 
             valter.typeCheck(contract, serviceResponse);
-            expect(Valter.hasError).to.equal(true);
+            expect(valter.currentState().hasError).to.equal(true);
         });
 
         it('should compare contract and service response with not same objects', function() {
@@ -194,7 +195,7 @@ describe("Valter", function() {
             var exception;
 
             valter.typeCheck(contract, serviceResponse);
-            expect(Valter.hasError).to.equal(true);
+            expect(valter.currentState().hasError).to.equal(true);
         });
 
         it('should check object in array as same objects', function(){
@@ -220,7 +221,7 @@ describe("Valter", function() {
             };
 
             valter.typeCheck(contract, serviceResponse);
-            expect(Valter.hasError).to.equal(false);
+            expect(valter.currentState().hasError).to.equal(false);
         });
 
         it('should check object in array as not same objects', function(){
@@ -246,7 +247,7 @@ describe("Valter", function() {
             };
 
             valter.typeCheck(contract, serviceResponse);
-            expect(Valter.hasError).to.equal(true);
+            expect(valter.currentState().hasError).to.equal(true);
         });
     });
 });
