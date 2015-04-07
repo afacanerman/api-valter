@@ -71,6 +71,24 @@ describe("Valter", function() {
             expect( valter.currentState().hasError).to.equal(true);
             expect( valter.currentState().keepAlive).to.equal(false);
         });
+
+        it('it should throw an argument exception when ', function(){
+            valter.checkContract({
+                "producer": "someurl",
+                "for": "some info",
+                "on": "GET",
+                "uri": "/someEndpoint",
+                "expect": {
+                    "request": {
+                        "status_code": 200,
+                        "headers": []
+                    },
+                    //body parameter missing
+                }
+            });
+            expect( valter.currentState().hasError).to.equal(true);
+            expect( valter.currentState().keepAlive).to.equal(false);
+        });
     });
 
     describe('#request(url, options, promise)', function(){
