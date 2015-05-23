@@ -20,7 +20,7 @@ setInterval(function () {
     if(state === 0){
     	process.exit(0);
     }
-    else if(state == 1){
+    else if(state === 1){
     	process.exit(1);
     }
 }, 100);
